@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { Item } from "@/types/types";
-defineProps<{ items: Readonly<Item[]> }>();
+import type { Auction } from "@/types/types";
+defineProps<{ auctions: Readonly<Auction[]> }>();
 defineEmits<{
-  (event: "itemClicked", id: string): void;
+  (event: "auctionClicked", id: string): void;
 }>();
 
 const getFormatedEndsAtDate = (endsAt: string) => {
@@ -14,18 +14,18 @@ const getFormatedEndsAtDate = (endsAt: string) => {
 </script>
 
 <template>
-  <div class="flex flex-row gap-3" v-if="items">
+  <div class="flex flex-row gap-3" v-if="auctions">
     <!-- TODO add images -->
     <div
-      @click="$emit('itemClicked', item.id!)"
+      @click="$emit('auctionClicked', auction.id!)"
       class="p-4 shadow-md rounded-md"
-      v-for="item of items"
-      :key="item.id!"
+      v-for="auction of auctions"
+      :key="auction.id!"
     >
-      <p>{{ item.title }}</p>
-      <p>{{ item.description }}</p>
+      <p>{{ auction.title }}</p>
+      <p>{{ auction.description }}</p>
       <!-- <p>   {{ getRemainingTimeinMillis(item.endsAt) }}</p> -->
-      <p>Ends at: {{getFormatedEndsAtDate(item.endsAt!)}}</p>
+      <p>Ends at: {{getFormatedEndsAtDate(auction.endsAt!)}}</p>
     </div>
   </div>
 </template>

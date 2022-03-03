@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
 import MainLayout from "../components/layout/MainLayout.vue";
 import { object, string, date } from "yup";
 import { Field, ErrorMessage, useForm } from "vee-validate";
 import type {
-  Item,
+  Auction,
   Maybe,
-  AuctionItemInput,
-  RootMutationType,
-  RootQueryType,
+  AuctionInput,
 } from "@/types/types";
-import { useMutation, useQuery, useResult } from "@vue/apollo-composable";
+import { useMutation } from "@vue/apollo-composable";
 import gql from "graphql-tag";
 import router from "@/router";
 
@@ -40,8 +37,8 @@ const {
   mutate: createItemMutation,
   onDone,
   onError,
-} = useMutation<{createAuctionItem: Maybe<Item>}, { input: AuctionItemInput }>(gql`
-  mutation CreateItem($input: AuctionItemInput!) {
+} = useMutation<{auction: Maybe<Auction>}, { input: AuctionInput }>(gql`
+  mutation CreateAuction($input: AuctionItemInput!) {
     createAuctionItem(input: $input) {
       id
     }
@@ -49,7 +46,7 @@ const {
 `);
 
 onDone((result) => {
-  router.push("/details/" + result.data?.createAuctionItem?.id);
+  router.push("/details/" + result.data?.auction?.id);
 });
 
 onError((err) => {

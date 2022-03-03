@@ -1,16 +1,26 @@
+import type { User } from '@/types/types'
 import { defineStore } from 'pinia'
+import { boolean } from 'yup/lib/locale'
 
-export const useCounterStore = defineStore({
-  id: 'counter',
+type UserStore = {
+  isLoggedIn: boolean;
+  user: User | undefined;
+}
+
+export const useUserStore = defineStore({
+  id: 'user',
   state: () => ({
-    counter: 0
-  }),
+    isLoggedIn: false,
+    user: undefined,
+  } as UserStore),
   getters: {
-    doubleCount: (state) => state.counter * 2
   },
   actions: {
-    increment() {
-      this.counter++
+    login(user: User) {
+      this.$patch({isLoggedIn: true, user})
+    },
+    logout() {
+      this.$patch({isLoggedIn: false, user: undefined})
     }
   }
 })

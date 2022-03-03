@@ -13,8 +13,8 @@ const id = route.params.id;
 
 const { result, loading, error } = useQuery<RootQueryType>(
   gql`
-    query GetItemDetails($id: Int!) {
-      itemDetails(id: $id) {
+    query GetAuctionDetails($id: Int!) {
+      auctionDetails(id: $id) {
         id
         title
         description
@@ -25,7 +25,7 @@ const { result, loading, error } = useQuery<RootQueryType>(
   { id: Number(id) }
 );
 
-const item = useResult(result, null, (data) => data.itemDetails);
+const item = useResult(result, null, (data) => data.auctionDetails);
 
 const getFormatedEndsAtDate = (endsAt: string) => {
   const endsAtDate = new Date(endsAt);
